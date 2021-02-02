@@ -13,4 +13,13 @@ class RecipesController < ApplicationController
         # puts params
         render json: Recipe.create(params["recipe"])
     end
+
+    def delete
+        render json: Recipe.delete(params["id"])
+    end
+
+    def update
+        puts params
+        render json: Recipe.update(params["id"], params["recipe"])
+    end
 end
