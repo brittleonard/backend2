@@ -1,6 +1,6 @@
 class Recipe
     if ENV["DATABASE_URL"]
-        PG.connect(ENV['DATABASE_URL'])
+        DB = PG.connect(ENV['DATABASE_URL'])
     elsif
         DB = PG.connect({:host => "localhost", :port => 5432, :dbname => 'backend2_development'})
     end
