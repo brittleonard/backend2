@@ -17,4 +17,33 @@ class Recipe
             }
         end
     end
+
+    def self.find(id)
+        results = DB.exec("SELECT * FROM recipes WHERE id=#{id};")
+        return {
+            "id" => results.first["id"].to_i,
+            "name" => results.first["name"],
+            "ingredients" => results.first["ingredients"],
+            "instructions" => results.first["instructions"],
+            "image" => results.first["image"],
+        }
+    end
+
+    def self.create(opts)
+        results = DB.exec(
+            <<-SQL
+            INSERT INTO recipes (name, ingredients, instructions, image)
+            VALUES ('#{opts["name"]}', '#{opts["ingredients"]}', '#{opts["instructions"]}', '#{opts["image"]}')
+            RETURNING id, name, ingredients, instructions, image;
+            SQL
+        )
+        return {
+            "id" => results.first["id"].to_i,
+            "name" => results.first["name"],
+            "ingredients" => results.first["ingredients"],
+            "instructions" => results.first["instructions"],
+            "image" => results.first["image"],
+        }
+    end
+
 end
