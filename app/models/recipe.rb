@@ -2,7 +2,7 @@ class Recipe
     if ENV["DATABASE_URL"]
         PG.connect(ENV['DATABASE_URL'])
     elsif
-        DB = PG.connect({:host => "localhost", :port => 5432, :dbname => 'rails_react_recipe_development'})
+        DB = PG.connect({:host => "", :port => 5432, :dbname => 'rails_react_recipe_development'})
     end
 
     def self.all
