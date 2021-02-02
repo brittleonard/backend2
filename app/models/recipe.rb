@@ -46,4 +46,26 @@ class Recipe
         }
     end
 
+    def self.delete(id)
+        results = DB.exec("DELETE FROM recipes WHERE id=#{id};")
+        return { "deleted" => true }
+    end
+
+    def self.update(id, opts)
+        results = DB.exec(
+            <<-SQL
+            UPDATE recipes
+            SET name='#{opts["name"]}', ingredients='#{opts["ingredients"]}', instructions='#{opts["instructions"]}', image='#{opts["image"]}'
+            WHERE id=#{id}
+            RETURNING id, name, ingredients, instructions, image;
+            SQL
+        )
+        return {
+            "id" => results.first["id"].to_i,
+            "name" => results.first["name"],
+            "ingredients" => results.first["ingredients"],
+            "instructions" => results.first["instructions"],
+            "image" => results.first["image"],
+        }
+    end
 end

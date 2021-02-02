@@ -9,5 +9,8 @@ Rails.application.routes.draw do
 
   post '/recipes', to: 'recipes#create'
 
+  delete '/recipes/:id', to: 'recipes#delete'
+
+  put '/recipes/:id', to: 'recipes#update'
 
 end
